@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
-import { LogOut, User2 } from 'lucide-react'
+import { LogOut, User2, Bell } from 'lucide-react'  // Add the Bell icon here
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -28,31 +28,97 @@ const Navbar = () => {
             toast.error(error.response.data.message);
         }
     }
+
+    // Function to navigate to the notifications page
+    const goToNotifications = () => {
+        navigate('/notifications'); // Redirect to the notifications page
+    }
+
     return (
         <div className='bg-white'>
-            <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
+            <div className='flex items-center justify-between mx-auto max-w-7xl h-16 px-4'>
                 <div>
-                    <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Portal</span></h1>
+                    <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Elevate</span></h1>
                 </div>
                 <div className='flex items-center gap-12'>
-                    <ul className='flex font-medium items-center gap-5'>
-                        {
-                            user && user.role === 'recruiter' ? (
-                                <>
-                                    <li><Link to="/admin/companies">Companies</Link></li>
-                                    <li><Link to="/admin/jobs">Jobs</Link></li>
-                                </>
-                            ) : (
-                                <>
-                                    <li><Link to="/">Home</Link></li>
-                                    <li><Link to="/jobs">Jobs</Link></li>
-                                    <li><Link to="/browse">Browse</Link></li>
-                                </>
-                            )
-                        }
-
-
+                    <ul className="flex font-medium items-center gap-5">
+                        {user && user.role === 'recruiter' ? (
+                            <>
+                                <li>
+                                    <Link
+                                        to="/admin/companies"
+                                        className="group flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-gray-800 font-semibold rounded-full backdrop-blur-lg bg-opacity-30 border border-transparent hover:opacity-80 transition-transform duration-300 ease-in-out hover:scale-105"
+                                    >
+                                        <span className="relative flex items-center">
+                                            <span className="transform transition-transform duration-300 group-hover:opacity-0">→</span>
+                                            <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300">←</span>
+                                        </span>
+                                        Companies
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/admin/jobs"
+                                        className="group flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-gray-800 font-semibold rounded-full backdrop-blur-lg bg-opacity-30 border border-transparent hover:opacity-80 transition-transform duration-300 ease-in-out hover:scale-105"
+                                    >
+                                        <span className="relative flex items-center">
+                                            <span className="transform transition-transform duration-300 group-hover:opacity-0">→</span>
+                                            <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300">←</span>
+                                        </span>
+                                        Jobs
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link
+                                        to="/"
+                                        className="group flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-gray-800 font-semibold rounded-full backdrop-blur-lg bg-opacity-30 border border-transparent hover:opacity-80 transition-transform duration-300 ease-in-out hover:scale-105"
+                                    >
+                                        <span className="relative flex items-center">
+                                            <span className="transform transition-transform duration-300 group-hover:opacity-0">→</span>
+                                            <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300">←</span>
+                                        </span>
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/jobs"
+                                        className="group flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-gray-800 font-semibold rounded-full backdrop-blur-lg bg-opacity-30 border border-transparent hover:opacity-80 transition-transform duration-300 ease-in-out hover:scale-105"
+                                    >
+                                        <span className="relative flex items-center">
+                                            <span className="transform transition-transform duration-300 group-hover:opacity-0">→</span>
+                                            <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300">←</span>
+                                        </span>
+                                        Jobs
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/browse"
+                                        className="group flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-gray-800 font-semibold rounded-full backdrop-blur-lg bg-opacity-30 border border-transparent hover:opacity-80 transition-transform duration-300 ease-in-out hover:scale-105"
+                                    >
+                                        <span className="relative flex items-center">
+                                            <span className="transform transition-transform duration-300 group-hover:opacity-0">→</span>
+                                            <span className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300">←</span>
+                                        </span>
+                                        Browse
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
+
+                    {/* Add the Notification Bell Icon */}
+                    <div className="relative cursor-pointer" onClick={goToNotifications}>
+                        <Bell size={24} className="text-gray-700" />
+                        <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1 py-0.5">
+                            3 {/* You can dynamically set this number */}
+                        </div>
+                    </div>
+
                     {
                         !user ? (
                             <div className='flex items-center gap-2'>

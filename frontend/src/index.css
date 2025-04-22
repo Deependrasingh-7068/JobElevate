@@ -73,4 +73,64 @@
     body {
       @apply bg-background text-foreground;
     }
+  }/* Basic Styles */
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 0.15em solid #6A38C2;
+  animation: typing 4s steps(20) 1s forwards, blink 0.75s step-end infinite, deleting 4s steps(20) 5s forwards;
+}
+
+/* Typing Effect */
+@keyframes typing {
+  from {
+    width: 0;
   }
+  to {
+    width: 100%;
+  }
+}
+
+/* Deleting Effect (Backwards) */
+@keyframes deleting {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+/* Blinking Cursor */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Change phrase after typing */
+.typewriter:nth-child(1) {
+  animation-delay: 0s, 0.5s, 5s;
+}
+
+.typewriter:nth-child(2) {
+  animation-delay: 10s, 0.5s, 15s;
+}
+
+.typewriter:nth-child(3) {
+  animation-delay: 20s, 0.5s, 25s;
+}
+/* Add this to your CSS or Tailwind classes */
+/* .fixed {
+  position: fixed;
+  top: 400px;
+  right: 0;
+  width: 320px; 
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  padding: 16px;
+  overflow-y: auto;
+} */
