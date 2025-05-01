@@ -1,5 +1,6 @@
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
+import { Notification } from "../models/notification.model.js";
 
 export const applyJob = async (req, res) => {
     try {
@@ -31,20 +32,31 @@ export const applyJob = async (req, res) => {
         }
         // create a new application
         const newApplication = await Application.create({
-            job:jobId,
-            applicant:userId,
+            job: jobId,
+            applicant: userId,
         });
 
         job.applications.push(newApplication._id);
         await job.save();
+
+        // Create notification for the recruiter
+        await Notification.create({
+            recipient: job.created_by,
+            type: 'new_application',
+            message: `New application received for job: ${job.title}`,
+            job: job._id,
+            application: newApplication._id
+        });
+
         return res.status(201).json({
-            message:"Job applied successfully.",
-            success:true
+            message: "Job applied successfully.",
+            success: true
         })
     } catch (error) {
         console.log(error);
     }
 };
+
 export const getAppliedJobs = async (req,res) => {
     try {
         const userId = req.id;
@@ -95,23 +107,23 @@ export const getApplicants = async (req,res) => {
         console.log(error);
     }
 }
-export const updateStatus = async (req,res) => {
+export const updateStatus = async (req, res) => {
     try {
-        const {status} = req.body;
+        const { status } = req.body;
         const applicationId = req.params.id;
-        if(!status){
+        if (!status) {
             return res.status(400).json({
-                message:'status is required',
-                success:false
+                message: 'status is required',
+                success: false
             })
         };
 
         // find the application by applicantion id
-        const application = await Application.findOne({_id:applicationId});
-        if(!application){
+        const application = await Application.findOne({ _id: applicationId });
+        if (!application) {
             return res.status(404).json({
-                message:"Application not found.",
-                success:false
+                message: "Application not found.",
+                success: false
             })
         };
 
@@ -119,12 +131,22 @@ export const updateStatus = async (req,res) => {
         application.status = status.toLowerCase();
         await application.save();
 
+        // Create notification for the student
+        const job = await Job.findById(application.job);
+        await Notification.create({
+            recipient: application.applicant,
+            type: 'application_status',
+            message: `Your application for ${job.title} has been ${status.toLowerCase()}`,
+            job: job._id,
+            application: application._id
+        });
+
         return res.status(200).json({
-            message:"Status updated successfully.",
-            success:true
+            message: "Status updated successfully.",
+            success: true
         });
 
     } catch (error) {
         console.log(error);
     }
-}
+};

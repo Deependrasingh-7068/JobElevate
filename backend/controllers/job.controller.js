@@ -1,4 +1,6 @@
 import { Job } from "../models/job.model.js";
+import { User } from "../models/user.model.js";
+import { Notification } from "../models/notification.model.js";
 
 // admin post krega job
 export const postJob = async (req, res) => {
@@ -24,6 +26,19 @@ export const postJob = async (req, res) => {
             company: companyId,
             created_by: userId
         });
+
+        // Create notifications for all students
+        const students = await User.find({ role: 'student' });
+        const notificationPromises = students.map(student => 
+            Notification.create({
+                recipient: student._id,
+                type: 'new_job',
+                message: `New job posted: ${title}`,
+                job: job._id
+            })
+        );
+        await Promise.all(notificationPromises);
+
         return res.status(201).json({
             message: "New job created successfully.",
             job,
