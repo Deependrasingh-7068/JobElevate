@@ -41,7 +41,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
+    if (input.file && user.role === 'student') {
       formData.append("file", input.file);
     }
     try {
@@ -69,7 +69,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   return (
     <div>
       <Dialog open={open}>
-        <DialogContent className="sm:max-w-[425px] mx-auto my-auto flex items-center justify-center h-full" onInteractOutside={() => setOpen(false)}>
+        <DialogContent className="sm:max-w-[425px] mx-auto my-auto flex flex-col items-center justify-center h-full" onInteractOutside={() => setOpen(false)}>
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
           </DialogHeader>
@@ -127,17 +127,19 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   className="col-span-3"
                 />
               </div>
-              <div className='grid grid-cols-4 items-center gap-4'>
-                <Label htmlFor="file" className="text-right">Resume</Label>
-                <Input
-                  id="file"
-                  name="file"
-                  type="file"
-                  accept="application/pdf"
-                  onChange={fileChangeHandler}
-                  className="col-span-3"
-                />
-              </div>
+              {user?.role === 'student' && (
+                <div className='grid grid-cols-4 items-center gap-4'>
+                  <Label htmlFor="file" className="text-right">Resume</Label>
+                  <Input
+                    id="file"
+                    name="file"
+                    type="file"
+                    accept="application/pdf"
+                    onChange={fileChangeHandler}
+                    className="col-span-3"
+                  />
+                </div>
+              )}
             </div>
             <DialogFooter>
               {loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Update</Button>}

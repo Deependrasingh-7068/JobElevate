@@ -14,6 +14,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob';
 import Applicants from './components/admin/Applicants';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import Notifications from './components/Notifications';
 
 // 🔥 Import Notification Context
 import { NotificationProvider } from './context/shared/NotificationContext';
@@ -38,7 +39,7 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
   {
-    path: "/jobs",
+    path: "/jobs", //
     element: <Jobs />,
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
@@ -48,7 +49,7 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
   {
-    path: "/browse",
+    path: "/browse", // 
     element: <Browse />,
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
@@ -57,9 +58,14 @@ const appRouter = createBrowserRouter([
     element: <Profile />,
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
+  {
+    path: "/notifications",
+    element: <Notifications />,
+    errorElement: <ErrorBoundary />
+  },
   // admin ke liye yha se start hoga
   {
-    path: "/admin/companies",
+    path: "/admin/companies", //
     element: <ProtectedRoute><Companies /></ProtectedRoute>,
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
@@ -74,7 +80,7 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
   {
-    path: "/admin/jobs",
+    path: "/admin/jobs", //
     element: <ProtectedRoute><AdminJobs /></ProtectedRoute>,
     errorElement: <ErrorBoundary /> // Custom error page for this route
   },
