@@ -1,4 +1,6 @@
 JobElevate – MERN Stack Job Portal
+
+
 JobElevate is a full-fledged job portal web application built using the MERN Stack (MongoDB, Express.js, React.js, Node.js). It is designed to bridge the gap between freshers and employers by offering a smooth and user-friendly platform for job search and recruitment.
 
 🚀 Features
