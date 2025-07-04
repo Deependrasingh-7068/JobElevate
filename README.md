@@ -99,15 +99,9 @@ npm start
 
 
 🧑‍💻 Developed By
-Team Tricoders
-
 Deependra Singh
 
-Aishwaryan Gupta
 
-Shivanshu Kesari
-
-Abhay Patel
 
 📜 License
 This project is licensed under the MIT License.
